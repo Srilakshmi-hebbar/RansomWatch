@@ -1,0 +1,2 @@
+Invoice #02 (DUMMY DATA)
+Amount: 3000

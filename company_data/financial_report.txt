@@ -1,0 +1,4 @@
+Quarterly Financial Report (DUMMY DATA)
+Revenue: 1,000,000
+Expenses: 650,000
+Profit: 350,000

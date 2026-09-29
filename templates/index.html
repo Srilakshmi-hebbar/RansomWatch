@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RansomWatch - Ransomware Activity Detection &amp; Recovery Simulator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>&#128737; RansomWatch</h1>
+    <p class="sub">Intelligent Ransomware Activity Detection &amp; Recovery Simulator</p>
+  </div>
+  <p class="disclaimer">Educational prototype inspired by enterprise data-protection and cyber-resilience
+    concepts. It never runs real ransomware or touches real files.</p>
+</header>
+
+<!-- Incident banner (shown only when an alert is open) -->
+<div id="banner" class="banner hidden"></div>
+
+<!-- 1. KPI cards -->
+<section class="cards">
+  <div class="card"><h3>Files Monitored</h3><div class="big" id="k-total">-</div><small>in company_data/</small></div>
+  <div class="card"><h3>Modified (last 60 s)</h3><div class="big" id="k-modified">-</div><small>distinct files</small></div>
+  <div class="card"><h3>Security Status</h3><div class="big"><span id="k-status" class="badge">-</span></div><small id="k-status-note"></small></div>
+  <div class="card"><h3>Warnings</h3><div class="big warn-text" id="k-warn">0</div><small>total raised</small></div>
+  <div class="card"><h3>Critical Alerts</h3><div class="big crit-text" id="k-crit">0</div><small>total raised</small></div>
+  <div class="card"><h3>Risk Level</h3><div class="big"><span id="k-risk" class="badge">-</span></div>
+    <div class="meter"><div id="k-meter" class="meter-fill"></div></div><small id="k-score">score 0 / 100</small></div>
+</section>
+
+<!-- Action buttons -->
+<section class="panel actions">
+  <h2>Controls</h2>
+  <div class="buttons">
+    <button id="btn-sim" class="btn danger">&#9889; Simulate Attack</button>
+    <button id="btn-protect" class="btn safe">&#128274; Protect Data</button>
+    <button id="btn-recover" class="btn primary">&#9851; Recover</button>
+    <button id="btn-reset" class="btn ghost">Reset Demo</button>
+  </div>
+  <div id="msg" class="msg hidden"></div>
+  <p class="hint"><b>Suggested demo order:</b> 1) Protect Data &rarr; 2) Simulate Attack &rarr; 3) read the alert
+    &rarr; 4) Recover.</p>
+</section>
+
+<section class="grid2">
+  <!-- Explainability -->
+  <div class="panel">
+    <h2>Why is the status what it is?</h2>
+    <ul id="reasons" class="reasons"></ul>
+    <h4>Live detection window (last <span id="w-sec">10</span> s)</h4>
+    <table class="mini">
+      <thead><tr><th>Measure</th><th>Now</th><th>Warning at</th><th>Critical at</th></tr></thead>
+      <tbody>
+        <tr><td>File changes</td><td id="w-total">0</td><td id="r-wc"></td><td id="r-cc"></td></tr>
+        <tr><td>Renames</td><td id="w-ren">0</td><td id="r-wr"></td><td id="r-cr"></td></tr>
+        <tr><td>Extension changes</td><td id="w-ext">0</td><td id="r-we"></td><td>-</td></tr>
+      </tbody>
+    </table>
+    <p class="small" id="breakdown"></p>
+  </div>
+
+  <!-- Chart -->
+  <div class="panel">
+    <h2>Activity (events per 5 s, last minute)</h2>
+    <div id="chart" class="chart"></div>
+    <div class="chart-axis"><span>-60 s</span><span>-30 s</span><span>now</span></div>
+  </div>
+</section>
+
+<section class="grid2">
+  <div class="panel">
+    <h2>Recent Alerts</h2>
+    <div id="alerts" class="alerts"></div>
+  </div>
+  <div class="panel">
+    <h2>Protection Status</h2>
+    <table class="mini">
+      <tr><td>Latest snapshot</td><td id="p-snap">none yet</td></tr>
+      <tr><td>Snapshots created</td><td id="p-count">0</td></tr>
+      <tr><td>Test sandbox</td><td id="p-sandbox">-</td></tr>
+      <tr><td>Sandbox files</td><td id="p-files">-</td></tr>
+    </table>
+    <p class="small">The simulator only ever changes <code>sandbox_data/</code>, a throw-away copy.</p>
+  </div>
+</section>
+
+<!-- Activity log -->
+<section class="panel">
+  <h2>Activity Log</h2>
+  <div class="table-wrap">
+    <table class="log">
+      <thead><tr><th>Timestamp</th><th>Event</th><th>File</th><th>Severity</th><th>Reason</th></tr></thead>
+      <tbody id="log"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>RansomWatch &middot; rule-based detection (no machine learning) &middot; Flask + SQLite prototype</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

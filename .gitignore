@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+ransomwatch.db
+snapshots/
+sandbox_data/
+venv/
+.venv/

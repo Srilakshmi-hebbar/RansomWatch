@@ -1,0 +1,3 @@
+Customer Report (DUMMY DATA)
+Active customers: 1,240
+Satisfaction: 92%
